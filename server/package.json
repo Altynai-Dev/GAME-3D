@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build":"yarn"
   },
   "dependencies": {
     "pathfinding": "^0.4.18",

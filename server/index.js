@@ -2,7 +2,7 @@ import pathfinding from "pathfinding";
 import { Server } from "socket.io";
 const io = new Server({
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
   },
 });
 
@@ -480,6 +480,7 @@ io.on("connection", (socket) => {
     hairColor: generateRandomHexColor(),
     topColor: generateRandomHexColor(),
     bottomColor: generateRandomHexColor(),
+    avatarUrl: "https://models.readyplayer.me/66065d3775cd33aaccd7b8db.glb"
   });
 
   socket.emit("hello", {
@@ -490,6 +491,14 @@ io.on("connection", (socket) => {
   });
 
   io.emit("characters", characters);
+
+  socket.on("characterAvatarUpdate", (avatarUrl) => {
+    const character = characters.find(
+      (character) => character.id === socket.id
+    );
+    character.avatarUrl = avatarUrl.split("?")[0] + "?" + new Date().getTime();
+    io.emit("characters", characters);
+  });
 
   socket.on("move", (from, to) => {
     const character = characters.find(
@@ -502,6 +511,12 @@ io.on("connection", (socket) => {
     character.position = from;
     character.path = path;
     io.emit("playerMove", character);
+  });
+
+  socket.on("dance", () => {
+    io.emit("playerDance", {
+      id: socket.id,
+    });
   });
 
   socket.on("itemsUpdate", (items) => {
