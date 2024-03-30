@@ -2,9 +2,9 @@ import { Environment, Grid, OrbitControls, useCursor } from "@react-three/drei";
 
 import { useThree } from "@react-three/fiber";
 import { useAtom } from "jotai";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useGrid } from "../hooks/useGrid";
-import { AnimatedWoman } from "./AnimatedWoman";
+import { Avatar } from "./Avatar";
 import { Item } from "./Item";
 import { Shop } from "./Shop";
 import { charactersAtom, mapAtom, socket, userAtom } from "./SocketManager";
@@ -248,15 +248,17 @@ export const Experience = () => {
       )}
       {!buildMode &&
         characters.map((character) => (
-          <AnimatedWoman
-            key={character.id}
+          <Suspense key={character.id}
+          >
+          <Avatar
             id={character.id}
-            path={character.path}
             position={gridToVector3(character.position)}
             hairColor={character.hairColor}
             topColor={character.topColor}
             bottomColor={character.bottomColor}
+            avatarUrl={character.avatarUrl}
           />
+          </Suspense>
         ))}
     </>
   );
