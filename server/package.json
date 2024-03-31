@@ -2,7 +2,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "build":"yarn"
+    "build":"yarn",
+    "start": "NODE_ENV=production node index.js"
   },
   "dependencies": {
     "pathfinding": "^0.4.18",
