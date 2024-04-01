@@ -1,12 +1,17 @@
 import pathfinding from "pathfinding";
 import { Server } from "socket.io";
+
+
+const origin = process.env.CLIENT_URL || "http://localhost:5173";
 const io = new Server({
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin,
   },
 });
 
 io.listen(3001);
+
+console.log("Server started on port 3001, allowed cors origin: " + origin);
 
 const characters = [];
 
