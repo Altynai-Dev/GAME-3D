@@ -1,16 +1,20 @@
-import pathfinding from "pathfinding";
-import { Server } from "socket.io";
+import express from 'express';
+import cors from 'cors';
+import pathfinding from 'pathfinding';
+import { Server } from 'socket.io';
 
+const app = express();
+app.use(cors());
 
-const origin = process.env.CLIENT_URL || "http://localhost:5173";
+const origin = process.env.CLIENT_URL || 'http://localhost:5173';
 
 const io = new Server({
   cors: {
     origin,
-    methods: ["GET"],
-    allowedHeaders: ["my-custom-header"],
-    credentials: true
-  }
+    methods: ['GET'],
+    allowedHeaders: ['my-custom-header'],
+    credentials: true,
+  },
 });
 
 const characters = [];
